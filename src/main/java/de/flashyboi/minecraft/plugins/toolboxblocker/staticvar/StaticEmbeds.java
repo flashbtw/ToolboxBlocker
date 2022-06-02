@@ -52,4 +52,21 @@ public final class StaticEmbeds {
         "\n    }" +
         "\n  ]" +
         "\n}";
+
+    public static final String START_EMBED =
+        "{\n" +
+        "  \"content\": null,\n" +
+        "  \"embeds\": [\n" +
+        "    {\n" +
+        "      \"title\": \"ToolboxBlocker started!\",\n" +
+        "      \"description\": \"Just informing you that ToolboxBlocker started successfully.\",\n" +
+        "      \"color\": 4062976,\n" +
+        "      \"author\": {\n" +
+        "        \"name\": \"flash_btw\",\n" +
+        "        \"url\": \"https://flash-codes.de/\"\n" +
+        "      }\n" +
+        "    }\n" +
+        "  ],\n" +
+        "  \"attachments\": []\n" +
+        "}";
 }

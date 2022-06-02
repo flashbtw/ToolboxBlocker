@@ -2,6 +2,7 @@ package de.flashyboi.minecraft.plugins.toolboxblocker.events;
 
 import de.flashyboi.minecraft.plugins.toolboxblocker.ToolboxBlocker;
 import de.flashyboi.minecraft.plugins.toolboxblocker.config.ConfigManager;
+import de.flashyboi.minecraft.plugins.toolboxblocker.staticvar.StaticConfigVars;
 import de.flashyboi.minecraft.plugins.toolboxblocker.staticvar.StaticEmbeds;
 import de.flashyboi.minecraft.plugins.toolboxblocker.util.DiscordWebhook;
 import de.flashyboi.minecraft.plugins.toolboxblocker.util.ToolboxChecker;
@@ -42,7 +43,7 @@ public class PlayerHandshake implements Listener {
             String modelName = clientData.getDeviceModel();
             boolean hasPlayerToolbox = ToolboxChecker.hasToolbox(deviceOs, clientData);
             MiniMessage miniMessage = MiniMessage.miniMessage();
-            Component component = miniMessage.deserialize("<red> test </red>");
+            Component component = miniMessage.deserialize(ConfigManager.getConfigValue(StaticConfigVars.TOOLBOX_KICK_MESSAGE_PATH, ""));
             String json = GsonComponentSerializer.gson().serializer().toJson(component);
             BaseComponent[] bc = ComponentSerializer.parse(json);
             if (hasPlayerToolbox) {
@@ -59,7 +60,7 @@ public class PlayerHandshake implements Listener {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
         String time = LocalDateTime.now(ZoneId.ofOffset("UTC", ZoneOffset.ofHours(0))).format(dateFormat);
 
-        if (ConfigManager.getConfigValue("Logging.log-to-txt", false)) {
+        if (ConfigManager.getConfigValue(StaticConfigVars.LOG_TO_TXT_PATH, false)) {
             String logDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             String resourceFolder = ToolboxBlocker.plugin.getDataFolder().getAbsolutePath();
             File logsPath = new File(resourceFolder + "/logs/");
@@ -74,7 +75,7 @@ public class PlayerHandshake implements Listener {
                 ioe.printStackTrace();
             }
         }
-        if (ConfigManager.getConfigValue("Logging.send-embed", false)) {
+        if (ConfigManager.getConfigValue(StaticConfigVars.SEND_EMBED_PATH, false)) {
             if (hasPlayerToolbox) {
                 toolboxFoundText = StaticEmbeds.TOOLBOX_FOUND_TRUE;
                 color = StaticEmbeds.EMBED_COLOR_TOOLBOX_FOUND_TRUE;
@@ -83,7 +84,7 @@ public class PlayerHandshake implements Listener {
                 color = StaticEmbeds.EMBED_COLOR_TOOLBOX_FOUND_FALSE;
             }
             String formattedJson = String.format(StaticEmbeds.toolboxEmbed, toolboxFoundText, color, playerName, playerUUID, modelName, deviceOs, time, time);
-            new Thread(() -> DiscordWebhook.sendCommand(formattedJson, ConfigManager.getConfigValue("Webhook-URL", ""))).start();
+            new Thread(() -> DiscordWebhook.sendCommand(formattedJson, ConfigManager.getConfigValue(StaticConfigVars.WEBHOOK_URL_PATH, ""))).start();
         }
     }
 }

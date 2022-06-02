@@ -1,7 +1,10 @@
 package de.flashyboi.minecraft.plugins.toolboxblocker;
 
+import de.flashyboi.minecraft.plugins.toolboxblocker.config.ConfigManager;
 import de.flashyboi.minecraft.plugins.toolboxblocker.config.ConfigVersionManager;
 import de.flashyboi.minecraft.plugins.toolboxblocker.events.PlayerHandshake;
+import de.flashyboi.minecraft.plugins.toolboxblocker.staticvar.StaticConfigVars;
+import de.flashyboi.minecraft.plugins.toolboxblocker.staticvar.StaticEmbeds;
 import de.flashyboi.minecraft.plugins.toolboxblocker.util.DiscordWebhook;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -32,20 +35,7 @@ public final class ToolboxBlocker extends Plugin {
         ConfigVersionManager configVersionManager = new ConfigVersionManager(this);
         configVersionManager.checkVersion(config);
 
-        PlayerHandshake.sendEmbed(true, "noone", UUID.randomUUID(), "something", DeviceOs.IOS);
-        DiscordWebhook.sendCommand("{\n" +
-                "  \"content\": null,\n" +
-                "  \"embeds\": [\n" +
-                "    {\n" +
-                "      \"color\": null,\n" +
-                "      \"author\": {\n" +
-                "        \"name\": \"dasdsa\"\n" +
-                "      }\n" +
-                "    }\n" +
-                "  ],\n" +
-                "  \"attachments\": []\n" +
-                "}", config.get("Webhook-URL").toString());
-
+        DiscordWebhook.sendCommand(StaticEmbeds.START_EMBED, ConfigManager.getConfigValue(StaticConfigVars.WEBHOOK_URL_PATH, ""));
     }
 
     @Override
