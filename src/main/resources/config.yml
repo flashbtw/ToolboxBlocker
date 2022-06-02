@@ -17,5 +17,7 @@ Logging:
   send-embed: true
   log-to-txt: false
 
+#This plugin uses MiniMessage by MiniDagger.
+#If you wan't
 Messages:
   toolbox-kick-message: "<red>Toolbox isn't allowed!</red>"

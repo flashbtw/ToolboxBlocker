@@ -7,8 +7,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class DiscordWebhook {
-    public static void sendCommand(final String command) {
-        final String webhookURL = "";
+    public static void sendCommand(final String command, final String webhookURL) {
         if (!webhookURL.isEmpty()) {
             try {
                 final HttpsURLConnection connection = (HttpsURLConnection) new URL(webhookURL).openConnection();
