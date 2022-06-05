@@ -85,7 +85,7 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
         <repository>
-            <id>sonatype-oss-snapshots1</id>
+            <id>sonatype-oss-releases1</id>
             <url>https://s01.oss.sonatype.org/content/repositories/releases/</url>
         </repository>
         <repository>
@@ -97,6 +97,10 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+        </repository>
+        <repository>
+            <id>snapshot-oss-snapshots1</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
     </repositories>
 
@@ -140,7 +144,7 @@
         <dependency>
             <groupId>io.github.flashbtw</groupId>
             <artifactId>FlashLib</artifactId>
-            <version>0.0.7-SNAPSHOT</version>
+            <version>0.0.8-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
