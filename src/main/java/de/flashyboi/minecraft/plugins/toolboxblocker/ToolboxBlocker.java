@@ -64,4 +64,3 @@ public final class ToolboxBlocker extends Plugin {
     }
 }
 
-/* TODO: Use config stuff */

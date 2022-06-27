@@ -23,12 +23,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.UUID;
 
 public class PlayerHandshake implements Listener {
@@ -41,7 +39,7 @@ public class PlayerHandshake implements Listener {
             BedrockClientData clientData = GeyserImpl.getInstance().connectionByUuid(playerUUID).getClientData();
             DeviceOs deviceOs = clientData.getDeviceOs();
             String modelName = clientData.getDeviceModel();
-            boolean hasPlayerToolbox = ToolboxChecker.hasToolbox(deviceOs, clientData);
+            boolean hasPlayerToolbox = ToolboxChecker.hasToolbox(clientData);
             MiniMessage miniMessage = MiniMessage.miniMessage();
             Component component = miniMessage.deserialize(ConfigManager.getConfigValue(StaticConfigVars.TOOLBOX_KICK_MESSAGE_PATH, ""));
             String json = GsonComponentSerializer.gson().serializer().toJson(component);
@@ -50,6 +48,7 @@ public class PlayerHandshake implements Listener {
                 player.disconnect(bc);
             }
             sendEmbed(hasPlayerToolbox, playerName, playerUUID, modelName, deviceOs);
+            logToTxt(hasPlayerToolbox, playerName, playerUUID, modelName, deviceOs);
         }
 
     }
@@ -60,21 +59,6 @@ public class PlayerHandshake implements Listener {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
         String time = LocalDateTime.now(ZoneId.ofOffset("UTC", ZoneOffset.ofHours(0))).format(dateFormat);
 
-        if (ConfigManager.getConfigValue(StaticConfigVars.LOG_TO_TXT_PATH, false)) {
-            String logDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            String resourceFolder = ToolboxBlocker.plugin.getDataFolder().getAbsolutePath();
-            File logsPath = new File(resourceFolder + "/logs/");
-            try {
-                if (!logsPath.exists()) { logsPath.mkdir(); }
-
-                BufferedWriter bw = new BufferedWriter(new FileWriter(logsPath + "/log-" + logDate + ".txt", true));
-                bw.write("Player: " + playerName + "; UUID: " + playerUUID + "; DeviceOS: " + deviceOs + "; ModelName: " + modelName + "; Time: " + time);
-
-                bw.close();
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-            }
-        }
         if (ConfigManager.getConfigValue(StaticConfigVars.SEND_EMBED_PATH, false)) {
             if (hasPlayerToolbox) {
                 toolboxFoundText = StaticEmbeds.TOOLBOX_FOUND_TRUE;
@@ -87,5 +71,26 @@ public class PlayerHandshake implements Listener {
             new Thread(() -> DiscordWebhook.sendCommand(formattedJson, ConfigManager.getConfigValue(StaticConfigVars.WEBHOOK_URL_PATH, ""))).start();
         }
     }
+
+    public static void logToTxt(boolean hasToolbox, String playerName, UUID playerUUID, String modelName, DeviceOs deviceOs) {
+        if (ConfigManager.getConfigValue(StaticConfigVars.LOG_TO_TXT_PATH, false)) {
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+            String time = LocalDateTime.now(ZoneId.ofOffset("UTC", ZoneOffset.ofHours(0))).format(dateFormat);
+            String logDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String resourceFolder = ToolboxBlocker.plugin.getDataFolder().getAbsolutePath();
+            File logsPath = new File(resourceFolder + "/logs/");
+            try {
+                if (!logsPath.exists()) { logsPath.mkdir(); }
+
+                BufferedWriter bw = new BufferedWriter(new FileWriter(logsPath + "/log-" + logDate + ".txt", true));
+                bw.write("has Toolbox: " + hasToolbox + "Player: " + playerName + "; UUID: " + playerUUID + "; DeviceOS: " + deviceOs + "; ModelName: " + modelName + "; Time: " + time);
+
+                bw.close();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+        }
+    }
 }
 
+// TODO: refactor deviceos "samples"

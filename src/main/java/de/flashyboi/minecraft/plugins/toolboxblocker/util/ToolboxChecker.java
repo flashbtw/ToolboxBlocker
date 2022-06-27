@@ -8,12 +8,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ToolboxChecker {
-    public static boolean hasToolbox(DeviceOs deviceOs, BedrockClientData clientData) {
+    public static boolean hasToolbox(BedrockClientData clientData) {
         String modelName;
-        String deviceOsString = deviceOs.toString();
-        if (!(deviceOsString.equalsIgnoreCase("ANDROID") || deviceOsString.equalsIgnoreCase("GOOGLE"))) {
-            return false;
-        }
         if (clientData.getDeviceModel() != null) {
             modelName = clientData.getDeviceModel();
             return hasIllegalDeviceModel(modelName);
