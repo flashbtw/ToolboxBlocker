@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.flashyboi.minecraft.plugins</groupId>
-    <artifactId>ToolboxBlocker</artifactId>
+    <artifactId>ToolboxBlocker-Waterfall</artifactId>
     <version>1.0.0-UNSTABLE</version>
     <packaging>jar</packaging>
 
@@ -65,7 +65,7 @@
                                     <type>${project.packaging}</type>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>../2_waterfallsetup/waterfall/plugins</outputDirectory>
+                            <outputDirectory>../../2_waterfallsetup/waterfall/plugins/</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>

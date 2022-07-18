@@ -1,4 +1,4 @@
-name: ToolboxBlocker
+name: ToolboxBlocker-Waterfall
 version: '${project.version}'
 main: de.flashyboi.minecraft.plugins.toolboxblocker.ToolboxBlocker
 description: blocks Minecraft clients with toolbox
