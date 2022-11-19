@@ -11,20 +11,18 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import org.geysermc.floodgate.util.DeviceOs;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 public final class ToolboxBlocker extends Plugin {
     public static Configuration config;
     public static Plugin plugin;
-    public Logger log = this.getLogger();
+    public final Logger log = this.getLogger();
 
     @Override
     public void onEnable() {
@@ -60,6 +58,7 @@ public final class ToolboxBlocker extends Plugin {
 
         } catch (IOException | NullPointerException ioe) {
             ioe.printStackTrace();
+
         }
     }
 }

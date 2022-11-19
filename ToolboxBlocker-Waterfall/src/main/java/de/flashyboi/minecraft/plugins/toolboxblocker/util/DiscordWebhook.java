@@ -31,3 +31,6 @@ public class DiscordWebhook {
     }
 }
 
+// Code by Benz56 @Github
+// https://github.com/Benz56/CommandNotifier/blob/master/src/main/java/com/benzoft/commandnotifier/DiscordHook.java
+
